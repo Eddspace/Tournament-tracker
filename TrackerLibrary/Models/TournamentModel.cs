@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace TrackerLibrary;
+namespace TrackerLibrary.Models;
 
 public class TournamentModel
 {

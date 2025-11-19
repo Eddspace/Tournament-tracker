@@ -1,6 +1,8 @@
-﻿namespace TrackerLibrary;
+﻿using TrackerLibrary.Models;
 
-public class TextConnection : IDataConnection
+namespace TrackerLibrary.DataAccess;
+
+public class TextConnector : IDataConnection
 {
 
     // TODO - Make the CreatePrize method actually save to text files
