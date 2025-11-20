@@ -36,15 +36,15 @@
             selectTeamMenberDropDown = new ComboBox();
             selectTeamMenberLabel = new Label();
             addNewMemberGroupBox = new GroupBox();
-            firstNameValue = new TextBox();
-            firstNameLabel = new Label();
-            lastNameValue = new TextBox();
-            lastNameLabel = new Label();
-            cellphoneValue = new TextBox();
-            cellphoneLabel = new Label();
+            createMemberButton = new Button();
             emailValue = new TextBox();
             emailLabel = new Label();
-            createMemberButton = new Button();
+            cellphoneValue = new TextBox();
+            cellphoneLabel = new Label();
+            lastNameValue = new TextBox();
+            lastNameLabel = new Label();
+            firstNameValue = new TextBox();
+            firstNameLabel = new Label();
             teamMembersListBox = new ListBox();
             deleteSelectedMemberButton = new Button();
             createTeamButton = new Button();
@@ -134,78 +134,6 @@
             addNewMemberGroupBox.TabStop = false;
             addNewMemberGroupBox.Text = "Add New Member";
             // 
-            // firstNameValue
-            // 
-            firstNameValue.Location = new Point(163, 38);
-            firstNameValue.Name = "firstNameValue";
-            firstNameValue.Size = new Size(161, 43);
-            firstNameValue.TabIndex = 10;
-            // 
-            // firstNameLabel
-            // 
-            firstNameLabel.AutoSize = true;
-            firstNameLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            firstNameLabel.ForeColor = SystemColors.MenuHighlight;
-            firstNameLabel.Location = new Point(7, 38);
-            firstNameLabel.Name = "firstNameLabel";
-            firstNameLabel.Size = new Size(150, 37);
-            firstNameLabel.TabIndex = 9;
-            firstNameLabel.Text = "First Name:";
-            // 
-            // lastNameValue
-            // 
-            lastNameValue.Location = new Point(163, 78);
-            lastNameValue.Name = "lastNameValue";
-            lastNameValue.Size = new Size(161, 43);
-            lastNameValue.TabIndex = 12;
-            // 
-            // lastNameLabel
-            // 
-            lastNameLabel.AutoSize = true;
-            lastNameLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lastNameLabel.ForeColor = SystemColors.MenuHighlight;
-            lastNameLabel.Location = new Point(7, 75);
-            lastNameLabel.Name = "lastNameLabel";
-            lastNameLabel.Size = new Size(148, 37);
-            lastNameLabel.TabIndex = 11;
-            lastNameLabel.Text = "Last Name:";
-            // 
-            // cellphoneValue
-            // 
-            cellphoneValue.Location = new Point(163, 159);
-            cellphoneValue.Name = "cellphoneValue";
-            cellphoneValue.Size = new Size(161, 43);
-            cellphoneValue.TabIndex = 14;
-            // 
-            // cellphoneLabel
-            // 
-            cellphoneLabel.AutoSize = true;
-            cellphoneLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cellphoneLabel.ForeColor = SystemColors.MenuHighlight;
-            cellphoneLabel.Location = new Point(7, 156);
-            cellphoneLabel.Name = "cellphoneLabel";
-            cellphoneLabel.Size = new Size(143, 37);
-            cellphoneLabel.TabIndex = 13;
-            cellphoneLabel.Text = "CellPhone:";
-            // 
-            // emailValue
-            // 
-            emailValue.Location = new Point(163, 119);
-            emailValue.Name = "emailValue";
-            emailValue.Size = new Size(161, 43);
-            emailValue.TabIndex = 16;
-            // 
-            // emailLabel
-            // 
-            emailLabel.AutoSize = true;
-            emailLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            emailLabel.ForeColor = SystemColors.MenuHighlight;
-            emailLabel.Location = new Point(7, 116);
-            emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(88, 37);
-            emailLabel.TabIndex = 15;
-            emailLabel.Text = "Email:";
-            // 
             // createMemberButton
             // 
             createMemberButton.FlatAppearance.BorderColor = Color.Silver;
@@ -220,6 +148,83 @@
             createMemberButton.TabIndex = 32;
             createMemberButton.Text = "Create Member";
             createMemberButton.UseVisualStyleBackColor = true;
+            createMemberButton.Click += createMemberButton_Click;
+            // 
+            // emailValue
+            // 
+            emailValue.Font = new Font("Segoe UI", 14.25F);
+            emailValue.Location = new Point(91, 123);
+            emailValue.Name = "emailValue";
+            emailValue.Size = new Size(233, 33);
+            emailValue.TabIndex = 16;
+            // 
+            // emailLabel
+            // 
+            emailLabel.AutoSize = true;
+            emailLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            emailLabel.ForeColor = SystemColors.MenuHighlight;
+            emailLabel.Location = new Point(7, 116);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new Size(88, 37);
+            emailLabel.TabIndex = 15;
+            emailLabel.Text = "Email:";
+            // 
+            // cellphoneValue
+            // 
+            cellphoneValue.Font = new Font("Segoe UI", 14.25F);
+            cellphoneValue.Location = new Point(152, 162);
+            cellphoneValue.Name = "cellphoneValue";
+            cellphoneValue.Size = new Size(172, 33);
+            cellphoneValue.TabIndex = 14;
+            // 
+            // cellphoneLabel
+            // 
+            cellphoneLabel.AutoSize = true;
+            cellphoneLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            cellphoneLabel.ForeColor = SystemColors.MenuHighlight;
+            cellphoneLabel.Location = new Point(7, 155);
+            cellphoneLabel.Name = "cellphoneLabel";
+            cellphoneLabel.Size = new Size(143, 37);
+            cellphoneLabel.TabIndex = 13;
+            cellphoneLabel.Text = "CellPhone:";
+            // 
+            // lastNameValue
+            // 
+            lastNameValue.Font = new Font("Segoe UI", 14.25F);
+            lastNameValue.Location = new Point(152, 84);
+            lastNameValue.Name = "lastNameValue";
+            lastNameValue.Size = new Size(172, 33);
+            lastNameValue.TabIndex = 12;
+            // 
+            // lastNameLabel
+            // 
+            lastNameLabel.AutoSize = true;
+            lastNameLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lastNameLabel.ForeColor = SystemColors.MenuHighlight;
+            lastNameLabel.Location = new Point(7, 77);
+            lastNameLabel.Name = "lastNameLabel";
+            lastNameLabel.Size = new Size(148, 37);
+            lastNameLabel.TabIndex = 11;
+            lastNameLabel.Text = "Last Name:";
+            // 
+            // firstNameValue
+            // 
+            firstNameValue.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            firstNameValue.Location = new Point(152, 45);
+            firstNameValue.Name = "firstNameValue";
+            firstNameValue.Size = new Size(172, 33);
+            firstNameValue.TabIndex = 10;
+            // 
+            // firstNameLabel
+            // 
+            firstNameLabel.AutoSize = true;
+            firstNameLabel.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            firstNameLabel.ForeColor = SystemColors.MenuHighlight;
+            firstNameLabel.Location = new Point(7, 38);
+            firstNameLabel.Name = "firstNameLabel";
+            firstNameLabel.Size = new Size(150, 37);
+            firstNameLabel.TabIndex = 9;
+            firstNameLabel.Text = "First Name:";
             // 
             // teamMembersListBox
             // 
