@@ -47,4 +47,9 @@ public class TextConnector : IDataConnection
 
         return model;
     }
+
+    public List<PersonModel> GetPerson_all()
+    {
+        return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
+    }
 }
