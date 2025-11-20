@@ -97,7 +97,7 @@ public partial class CreateTeamForm : Form
             availableTeamMembers.Remove(p);
             selectedTeamMembers.Add(p);
 
-            WireUpLists(); 
+            WireUpLists();
         }
     }
 
@@ -110,7 +110,19 @@ public partial class CreateTeamForm : Form
             selectedTeamMembers.Remove(p);
             availableTeamMembers.Add(p);
 
-            WireUpLists(); 
+            WireUpLists();
         }
+    }
+
+    private void createTeamButton_Click(object sender, EventArgs e)
+    {
+        TeamModel t = new TeamModel();
+
+        t.TeamName = teamNameValue.Text;
+        t.TeamMembers = selectedTeamMembers;
+
+        t = GlobalConfig.Connection.CreateTeam(t);
+
+        //TODO - If we dont close the form then reset
     }
 }
