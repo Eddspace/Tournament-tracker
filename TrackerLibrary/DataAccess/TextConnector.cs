@@ -72,4 +72,9 @@ public class TextConnector : IDataConnection
     {
         return PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
     }
+
+    public List<TeamModel> GetTeam_all()
+    {
+        throw new NotImplementedException();
+    }
 }

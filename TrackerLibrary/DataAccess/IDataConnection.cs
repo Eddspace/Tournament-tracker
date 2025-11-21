@@ -9,4 +9,5 @@ public interface IDataConnection
     TeamModel CreateTeam(TeamModel model);
 
     List<PersonModel> GetPerson_all();
+    List<TeamModel> GetTeam_all();
 }

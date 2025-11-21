@@ -83,4 +83,24 @@ public class SqlConnector : IDataConnection
         }
         return output;
     }
+
+    public List<TeamModel> GetTeam_all()
+    {
+        List<TeamModel> output;
+
+        using (IDbConnection connection = new Microsoft.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+        {
+            output = connection.Query<TeamModel>("dbo.spTeam_GetAll").ToList();
+
+            foreach (TeamModel team in output)
+            {
+                var p = new DynamicParameters();
+                p.Add("@TeamId", team.Id);
+
+                team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMembers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+        }
+        return output;
+    }
 }

@@ -32,7 +32,7 @@
             addTeamButton = new Button();
             tournamentNameValue = new TextBox();
             tournamentNameLabel = new Label();
-            tournamentPlayerListBox = new ListBox();
+            tournamentTeamsListBox = new ListBox();
             selectTeamDropDown = new ComboBox();
             selectTeamLabel = new Label();
             headerLabel = new Label();
@@ -62,6 +62,7 @@
             addTeamButton.TabIndex = 27;
             addTeamButton.Text = "Add Team";
             addTeamButton.UseVisualStyleBackColor = true;
+            addTeamButton.Click += addTeamButton_Click;
             // 
             // tournamentNameValue
             // 
@@ -81,15 +82,15 @@
             tournamentNameLabel.TabIndex = 21;
             tournamentNameLabel.Text = "Tournament Name:";
             // 
-            // tournamentPlayerListBox
+            // tournamentTeamsListBox
             // 
-            tournamentPlayerListBox.BorderStyle = BorderStyle.FixedSingle;
-            tournamentPlayerListBox.FormattingEnabled = true;
-            tournamentPlayerListBox.ItemHeight = 30;
-            tournamentPlayerListBox.Location = new Point(471, 132);
-            tournamentPlayerListBox.Name = "tournamentPlayerListBox";
-            tournamentPlayerListBox.Size = new Size(302, 152);
-            tournamentPlayerListBox.TabIndex = 19;
+            tournamentTeamsListBox.BorderStyle = BorderStyle.FixedSingle;
+            tournamentTeamsListBox.FormattingEnabled = true;
+            tournamentTeamsListBox.ItemHeight = 30;
+            tournamentTeamsListBox.Location = new Point(471, 132);
+            tournamentTeamsListBox.Name = "tournamentTeamsListBox";
+            tournamentTeamsListBox.Size = new Size(302, 152);
+            tournamentTeamsListBox.TabIndex = 19;
             // 
             // selectTeamDropDown
             // 
@@ -261,7 +262,7 @@
             Controls.Add(addTeamButton);
             Controls.Add(tournamentNameValue);
             Controls.Add(tournamentNameLabel);
-            Controls.Add(tournamentPlayerListBox);
+            Controls.Add(tournamentTeamsListBox);
             Controls.Add(selectTeamDropDown);
             Controls.Add(selectTeamLabel);
             Controls.Add(headerLabel);
@@ -279,7 +280,7 @@
         private Button addTeamButton;
         private TextBox tournamentNameValue;
         private Label tournamentNameLabel;
-        private ListBox tournamentPlayerListBox;
+        private ListBox tournamentTeamsListBox;
         private ComboBox selectTeamDropDown;
         private Label selectTeamLabel;
         private Label headerLabel;
