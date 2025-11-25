@@ -75,6 +75,6 @@ public class TextConnector : IDataConnection
 
     public List<TeamModel> GetTeam_all()
     {
-        throw new NotImplementedException();
+        return TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
     }
 }

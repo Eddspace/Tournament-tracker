@@ -71,13 +71,12 @@ public static class TextConnectorProcessor
 
             string[] personIds = cols[2].Split("|");
 
-            output.Add(t);
-
             foreach (string id in personIds)
             {
                 t.TeamMembers.Add(people.Where(x => x.Id == int.Parse(id)).First());
             }
 
+            output.Add(t);
         }
 
         return output;

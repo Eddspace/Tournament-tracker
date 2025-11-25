@@ -7,12 +7,14 @@ public partial class CreateTeamForm : Form
 {
     private List<PersonModel> availableTeamMembers = GlobalConfig.Connection.GetPerson_all();
     private List<PersonModel> selectedTeamMembers = new List<PersonModel>();
+    private ITeamRequester callingForm;
 
-    public CreateTeamForm()
+    public CreateTeamForm(ITeamRequester caller)
     {
         InitializeComponent();
         //CreateSampleData();
         WireUpLists();
+        callingForm = caller;
     }
 
     private void CreateSampleData()
@@ -121,8 +123,10 @@ public partial class CreateTeamForm : Form
         t.TeamName = teamNameValue.Text;
         t.TeamMembers = selectedTeamMembers;
 
-        t = GlobalConfig.Connection.CreateTeam(t);
+        GlobalConfig.Connection.CreateTeam(t);
 
-        //TODO - If we dont close the form then reset
+        callingForm.TeamComplete(t);
+
+        this.Close();
     }
 }
