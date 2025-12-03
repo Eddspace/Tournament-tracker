@@ -109,11 +109,14 @@ public static class TextConnectorProcessor
                 tm.EnteredTeams.Add(teams.Where(x => x.Id == int.Parse(id)).First());
             }
 
-            string[] prizeIds = cols[4].Split("|");
-
-            foreach (string id in prizeIds)
+            if (cols[4].Length > 0)
             {
-                tm.Prizes.Add(prizes.Where(x => x.Id == int.Parse(id)).First());
+                string[] prizeIds = cols[4].Split("|");
+
+                foreach (string id in prizeIds)
+                {
+                    tm.Prizes.Add(prizes.Where(x => x.Id == int.Parse(id)).First());
+                }
             }
 
             string[] rounds = cols[5].Split("|");
@@ -333,28 +336,69 @@ public static class TextConnectorProcessor
 
     private static List<MatchupEntryModel> ConvertStringToMatchupEntryModels(string input)
     {
+
         string[] ids = input.Split('|');
+
         List<MatchupEntryModel> output = new List<MatchupEntryModel>();
-        List<MatchupEntryModel> entries = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+        List<string> entries = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile();
+        List<string> matchingEntries = new List<string>();
 
         foreach (string id in ids)
         {
-            output.Add(entries.Where(x => x.Id == int.Parse(id)).First());
-        }
 
+            foreach (string entry in entries)
+            {
+
+                string[] cols = entry.Split(',');
+
+                if (cols[0] == id)
+                {
+                    matchingEntries.Add(entry);
+                }
+            }
+        }
+        output = matchingEntries.ConvertToMatchupEntryModels();
         return output;
     }
 
     private static TeamModel LookupTeamById(int id)
     {
-        List<TeamModel> teams = GlobalConfig.TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(GlobalConfig.PeopleFile);
-        return teams.Where(x => x.Id == id).First();
+        List<string> teams = GlobalConfig.TeamFile.FullFilePath().LoadFile();
+
+        foreach (string team in teams)
+        {
+            string[] cols = team.Split(',');
+
+            if (cols[0] == id.ToString())
+            {
+                List<string> matchingTeams = new List<string>();
+
+                matchingTeams.Add(team);
+
+                return matchingTeams.ConvertToTeamModels(GlobalConfig.PeopleFile).First();
+            }
+
+        }
+        return null;
     }
 
     private static MatchupModel LookupMatchupById(int id)
     {
-        List<MatchupModel> matchups = GlobalConfig.MatchupFile.FullFilePath().LoadFile().ConvertToMatchupModels();
-        return matchups.Where(x => x.Id == id).First();
+        List<string> mathchups = GlobalConfig.MatchupFile.FullFilePath().LoadFile();
+        foreach (string matchup in mathchups)
+        {
+            string[] cols = matchup.Split(',');
+
+            if (cols[0] == id.ToString())
+            {
+                List<string> matchingMatchups = new List<string>();
+
+                matchingMatchups.Add(matchup);
+
+                return matchingMatchups.ConvertToMatchupModels().First();
+            }
+        }
+        return null;
     }
 
     public static List<MatchupModel> ConvertToMatchupModels(this List<string> lines)
@@ -367,7 +411,14 @@ public static class TextConnectorProcessor
             MatchupModel p = new MatchupModel();
             p.Id = int.Parse(cols[0]);
             p.Entries = ConvertStringToMatchupEntryModels(cols[1]);
-            p.Winner = LookupTeamById(int.Parse(cols[2]));
+            if (cols[2].Length == 0)
+            {
+                p.Winner = null;
+            }
+            else
+            {
+                p.Winner = LookupTeamById(int.Parse(cols[2]));
+            }
             p.MatchupRound = int.Parse(cols[3]);
             output.Add(p);
         }
