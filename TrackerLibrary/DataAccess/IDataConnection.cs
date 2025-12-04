@@ -12,4 +12,5 @@ public interface IDataConnection
     List<PersonModel> GetPerson_all();
     List<TeamModel> GetTeam_all();
     List<TournamentModel> GetTournament_All();
+    void UpdateMatchup(MatchupModel model);
 }
