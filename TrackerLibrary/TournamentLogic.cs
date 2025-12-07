@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace TrackerLibrary;
 
 public static class TournamentLogic
 {
-    //order our list randomly
+    // order our list randomly
     // check if it is big enough - if not, add in byes
     // create our first round of matchups
     // create every round after thatl
@@ -110,5 +111,104 @@ public static class TournamentLogic
     private static List<TeamModel> RandomizeTeamOrder(List<TeamModel> teams)
     {
         return teams.OrderBy(x => Guid.NewGuid()).ToList();
+    }
+
+    public static void UpdateTournamentResults(TournamentModel model)
+    {
+
+        List<MatchupModel> toScore = new List<MatchupModel>();
+
+        foreach (List<MatchupModel> round in model.Rounds)
+        {
+            foreach (MatchupModel rm in round)
+            {
+                if (rm.Winner == null && (rm.Entries.Any(x => x.Score != 0) || rm.Entries.Count == 1))
+                {
+                    toScore.Add(rm);
+                }
+            }
+        }
+
+        MarkWinnerInMatchups(toScore);
+        AdvanceWinners(toScore, model);
+
+        toScore.ForEach(x => GlobalConfig.Connection.UpdateMatchup(x));
+    }
+
+    private static void AdvanceWinners(List<MatchupModel> models, TournamentModel tournament)
+    {
+
+        foreach (MatchupModel m in models)
+        {
+            foreach (List<MatchupModel> round in tournament.Rounds)
+            {
+                foreach (MatchupModel rm in round)
+                {
+                    foreach (MatchupEntryModel me in rm.Entries)
+                    {
+                        if (me.ParentMatchup != null)
+                        {
+                            if (me.ParentMatchup.Id == m.Id)
+                            {
+                                me.TeamCompeting = m.Winner;
+                                GlobalConfig.Connection.UpdateMatchup(rm);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+    private static void MarkWinnerInMatchups(List<MatchupModel> models)
+    {
+        string greaterWins = ConfigurationManager.AppSettings["greaterWins"];
+
+        foreach (MatchupModel m in models)
+        {
+
+            if (m.Entries.Count == 1)
+            {
+                m.Winner = m.Entries[0].TeamCompeting;
+                continue;
+            }
+
+            if (greaterWins == "0")
+            {
+
+                if (m.Entries[0].Score < m.Entries[1].Score)
+                {
+                    m.Winner = m.Entries[0].TeamCompeting;
+                }
+
+                else if (m.Entries[1].Score < m.Entries[0].Score)
+                {
+                    m.Winner = m.Entries[1].TeamCompeting;
+                }
+                else
+                {
+                    throw new Exception("We do not allow ties in this Tournament Tracker.");
+                }
+            }
+            else
+            {
+
+                if (m.Entries[0].Score > m.Entries[1].Score)
+                {
+                    m.Winner = m.Entries[0].TeamCompeting;
+                }
+
+                else if (m.Entries[1].Score > m.Entries[0].Score)
+                {
+                    m.Winner = m.Entries[1].TeamCompeting;
+                }
+                else
+                {
+                    throw new Exception("We do not allow ties in this Tournament Tracker.");
+                }
+
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ public class SqlConnector : IDataConnection
 {
     private const string db = "Tournaments";
 
-    public PersonModel CreatePerson(PersonModel model)
+    public void CreatePerson(PersonModel model)
     {
         using (IDbConnection connection = new Microsoft.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
         {
@@ -24,12 +24,10 @@ public class SqlConnector : IDataConnection
             connection.Execute("dbo.spPeople_Insert", p, commandType: CommandType.StoredProcedure);
 
             model.Id = p.Get<int>("@Id");
-
-            return model;
         }
     }
 
-    public PrizeModel CreatePrize(PrizeModel model)
+    public void CreatePrize(PrizeModel model)
     {
         using (IDbConnection connection = new Microsoft.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
         {
@@ -43,12 +41,10 @@ public class SqlConnector : IDataConnection
             connection.Execute("dbo.spPrizes_Insert", p, commandType: CommandType.StoredProcedure);
 
             model.Id = p.Get<int>("@Id");
-
-            return model;
         }
     }
 
-    public TeamModel CreateTeam(TeamModel model)
+    public void CreateTeam(TeamModel model)
     {
         using (IDbConnection connection = new Microsoft.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
         {
@@ -68,12 +64,10 @@ public class SqlConnector : IDataConnection
 
                 connection.Execute("dbo.spTeamMembers_Insert", p, commandType: CommandType.StoredProcedure);
             }
-
-            return model;
         }
     }
 
-    public TournamentModel CreateTournament(TournamentModel model)
+    public void CreateTournament(TournamentModel model)
     {
         using (IDbConnection connection = new Microsoft.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
         {
@@ -85,7 +79,8 @@ public class SqlConnector : IDataConnection
 
             SaveTournamentRounds(connection, model);
 
-            return model;
+            TournamentLogic.UpdateTournamentResults(model);
+
         }
     }
 
