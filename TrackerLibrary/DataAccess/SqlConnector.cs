@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Reflection;
 using System.Threading.Tasks.Dataflow;
@@ -81,6 +82,17 @@ public class SqlConnector : IDataConnection
 
             TournamentLogic.UpdateTournamentResults(model);
 
+        }
+    }
+
+    public void CompleteTournament(TournamentModel model)
+    {
+        using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
+        {
+            var p = new DynamicParameters();
+            p.Add("@id", model.Id);
+
+            connection.Execute("dbo.spTournaments_Complete", p, commandType: CommandType.StoredProcedure);
         }
     }
 

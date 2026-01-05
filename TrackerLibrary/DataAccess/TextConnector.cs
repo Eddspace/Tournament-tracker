@@ -79,6 +79,16 @@ public class TextConnector : IDataConnection
 
     }
 
+    public void CompleteTournament(TournamentModel model)
+    {
+        List<TournamentModel> tournaments = GlobalConfig.TournamentFile.FullFilePath().LoadFile().ConvertToTournamentModels();
+
+        tournaments.Remove(model);
+        tournaments.SaveToTournamentFile();
+
+        TournamentLogic.UpdateTournamentResults(model);
+    }
+
     public List<PersonModel> GetPerson_all()
     {
         return GlobalConfig.PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
